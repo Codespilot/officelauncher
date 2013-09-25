@@ -1,0 +1,411 @@
+function OfficeLauncher()
+{
+
+// public
+
+    this.ViewDocument = function(url)
+    {
+        return openDocument(url,true);
+    };
+    
+    this.EditDocument = function(url)
+    {
+        return openDocument(url,false);
+    };
+    
+    this.setConsoleLoggingEnabled = function(enable)
+    {
+        m_consoleLogging = enable;
+    };
+    
+    this.setRules = function(rules)
+    {
+        m_ruleSet = {};
+        applyRules(rules);
+    }
+    
+    this.addRules = function(rules)
+    {
+        applyRules(rules);
+    }
+
+// private
+    var ACTIVEX_PROGID = {};
+    ACTIVEX_PROGID["sp"] = "SharePoint.OpenDocuments";
+    ACTIVEX_PROGID["ol"] = "OfficeLauncherOrg.OpenDocuments";
+    var NPAPI_MIMETYPE = {};
+    NPAPI_MIMETYPE["sp"] = "application/x-sharepoint";
+    NPAPI_MIMETYPE["ol"] = "application/x-officelauncher";
+    
+    var m_userAgent = navigator.userAgent.toLowerCase();
+    var m_isIE = (m_userAgent.indexOf("msie") != -1);
+    var m_isChrome = (m_userAgent.indexOf("chrome") != -1);
+    var m_isFirefox = (m_userAgent.indexOf("firefox") != -1);
+    var m_isSafari = (m_userAgent.indexOf("safari") != -1) && (!m_isChrome);
+    var m_isMac = (m_userAgent.indexOf("mac") != -1);
+    var m_isWin = (m_userAgent.indexOf("win") != -1);
+    
+    var m_ruleSet = {};
+    var m_pluginOrder = null;
+    var m_control = null;
+    var m_consoleLogging = false;
+    
+    // apply default rule set
+    applyRules("ax=sp,ol;npapi=sp,ol;npapi.chrome.mac=ol;sp,ol");
+
+    function openDocument(url,readOnly)
+    {
+        log().log("Opening url = ",url," readOnly = ",readOnly);
+        var control = getControl();
+        if(control)
+        {
+            var encodedUrl = encodeUrl(url);
+            log().log("encodedUrl = ",encodedUrl);
+            try
+            {
+                var result;
+                if(readOnly)
+                {
+                    result = control.ViewDocument(encodedUrl);
+                }
+                else
+                {
+                    result = control.EditDocument(encodedUrl);
+                }
+                log().log("Control object invoked successfully. result = ",result);
+                if (result === true || result === 0 || result === "0")
+                {
+                    return true;
+                }
+            }
+            catch(e)
+            {
+                log().error("Exception invoking control object",e);
+            }
+        }
+        else
+        {
+            log().error("No control object avialable.");
+        }
+        return false;
+    }
+    
+    function getControl()
+    {
+        if(m_control)
+        {
+            return m_control;
+        }
+        log().log("No control object available. Creating new one.");
+        var pluginOrder = getPluginOrder();
+        log().log("PlugIn order: ",pluginOrder);
+        if(window.ActiveXObject)
+        {
+            log().log("Using ActiveX on this platform.");
+            m_control = createActiveXControl(pluginOrder);
+            if(!m_control)
+            {
+                log().log("Failed creating Active-X control.");
+            }
+            return m_control;
+        }
+        else
+        {
+            log().log("Using NPAPI on this platform.");
+            m_control = createNPAPIControl(pluginOrder);
+            if(!m_control)
+            {
+                log().log("Failed creating NPAPI control.");
+            }
+            return m_control;
+        }
+    }
+    
+    function createActiveXControl(pluginOrder)
+    {
+        for(var i = 0; i < pluginOrder.length; i++)
+        {
+            var pluginTypeId = pluginOrder[i];
+            log().log("Trying to create ActiveX control for plugin type id '"+pluginTypeId+"'...");
+            try
+            {
+                var progId = ACTIVEX_PROGID[pluginTypeId];
+                if(!progId)
+                {
+                    log().error("No ActiveX ProgId for plugin type id '"+pluginTypeId+"'");
+                    continue;
+                }
+                log().log("Tying to create ActiveX object with progId '"+progId+"'...");
+                var obj = new ActiveXObject(progId);
+                if(obj)
+                {
+                    log().log("Successfully created ActiveX control: ",obj);
+                    return obj;
+                }
+            }
+            catch(e)
+            {
+                log().log("Exception creating ActiveX control. progId = ",progId," Exception = ",e);
+            }
+        }
+        log().log("No Active-X Object in plugin order could be created.");
+        return null;
+    }
+    
+    function createNPAPIControl(pluginOrder)
+    {
+        for(var i = 0; i < pluginOrder.length; i++)
+        {
+            var pluginTypeId = pluginOrder[i];
+            log().log("Trying to create NPAPI control for plugin type id '"+pluginTypeId+"'...");
+            try
+            {
+                var mimetype = NPAPI_MIMETYPE[pluginTypeId];
+                if(!mimetype)
+                {
+                    log().error("No NPAPI mimetype for plugin type id '"+pluginTypeId+"'");
+                    continue;
+                }
+                log().log("Tying to create NPAPI object with mimetype '"+mimetype+"'...");
+                var obj = getNpapiPlugin(mimetype,"officelauncher-plugin-container-"+pluginTypeId);
+                if(obj)
+                {
+                    log().log("Successfully created NPAPI control: ",obj);
+                    return obj;
+                }
+            }
+            catch(e)
+            {
+                log().log("Exception creating NPAPI control. mimetype = ",mimetype," Exception = ",e);
+            }
+        }
+        log().log("No NPAPI Object in plugin order could be created.");
+        return null;
+    }
+    
+    function getPluginOrder()
+    {
+        if(m_pluginOrder)
+        {
+            return m_pluginOrder;
+        }
+        var selTechnology = getTechnologySelector();
+        var selBrowser = getBrowserSelector();
+        var selOS = getOSSelector();
+        m_pluginOrder = m_ruleSet[selTechnology+"."+selBrowser+"."+selOS];
+        if(m_pluginOrder)
+        {
+            return m_pluginOrder;
+        }
+        m_pluginOrder = m_ruleSet[selTechnology+"."+selBrowser];
+        if(m_pluginOrder)
+        {
+            return m_pluginOrder;
+        }
+        m_pluginOrder = m_ruleSet[selTechnology];
+        if(m_pluginOrder)
+        {
+            return m_pluginOrder;
+        }
+        m_pluginOrder = m_ruleSet[""];
+        if(m_pluginOrder)
+        {
+            return m_pluginOrder;
+        }
+        m_pluginOrder = [];
+        return m_pluginOrder;
+    }
+    
+    function getTechnologySelector()
+    {
+        return window.ActiveXObject ? "ax" : "npapi";
+    }
+    
+    function getBrowserSelector()
+    {
+        if(m_isFirefox)
+        {
+            return "firefox";
+        }
+        if(m_isIE)
+        {
+            return "ie";
+        }
+        if(m_isChrome)
+        {
+            return "chrome";
+        }
+        if(m_isSafari)
+        {
+            return "safari";
+        }
+        return "unknown";
+    }
+    
+    function getOSSelector()
+    {
+        if(m_isWin)
+        {
+            return "win";
+        }
+        if(m_isMac)
+        {
+            return "mac";
+        }
+        return "unknown";
+    }
+    
+    function applyRules(rules)
+    {
+        var ruleDefs = rules.toLowerCase().split(";");
+        for(var i = 0; i < ruleDefs.length; i++)
+        {
+            var rule = ruleDefs[i];
+            var separatorPos = rule.indexOf("=");
+            var selector;
+            var pluginOrder;
+            if(separatorPos < 0)
+            {
+                selector = "";
+                pluginOrder = (rule.length > 0) ? rule.split(",") : [];
+            }
+            else
+            {
+                selector = rule.substring(0,separatorPos);
+                rule = rule.substring(separatorPos+1);
+                pluginOrder = (rule.length > 0) ? rule.split(",") : [];
+            }
+            m_ruleSet[selector] = pluginOrder;
+        }
+        m_pluginOrder = null;
+        m_control = null;
+    }
+    
+    function getNpapiPlugin(mimeType,containerId)
+    {
+        var plugin = null;
+        try
+        {
+            plugin = document.getElementById(containerId);
+            if(!plugin)
+            {
+                log().log("Trying to create NPAPI plugin. mimeType = ",mimeType);
+                if(isPluginAvailable(mimeType))
+                {
+                    var newContainer = document.createElement("object");
+                    newContainer.id = containerId;
+                    newContainer.type = mimeType;
+                    newContainer.width = 0;
+                    newContainer.height = 0;
+                    newContainer.style.setProperty("visibility","hidden","");
+                    document.body.appendChild(newContainer);
+                    plugin = document.getElementById(containerId);
+                }
+                else
+                {
+                    log().log("NPAPI PlugIn is not available. mimeType = ",mimeType);
+                }
+            }
+        }
+        catch(e)
+        {
+            log().log("Exception creating NPAPI PlugIn object. mimeType = ",mimeType," Exception = ",e);
+            plugin = null;
+        }
+        return plugin;
+    }
+    
+    function isPluginAvailable(mimeType)
+    {
+        return navigator && navigator.mimeTypes && navigator.mimeTypes[mimeType] && navigator.mimeTypes[mimeType].enabledPlugin;
+    }
+    
+    var ESCAPE_CHARS = "<>\'\"?#@%&";
+    
+    function encodeUrl(url)
+    {
+        var encoded = "";
+        var i = 0;
+        var x = 0;
+        for(i = 0; i < url.length; i++)
+        {
+            var charCode = url.charCodeAt(i);
+            if(charCode < 0x80)
+            {
+                if(  ( (charCode >= 'A') && (charCode <= 'Z') ) ||
+                     ( (charCode >= 'a') && (charCode <= 'z') ) ||
+                     ( (charCode >= '0') && (charCode <= '9') ) ||
+                     ( (charCode >= 33) && (charCode <= 122) && (ESCAPE_CHARS.indexOf(charCode) <  0) ) )
+                {
+                    encoded += url.charAt(i);
+                }
+                else
+                {
+                    encoded += "%";
+                    var s = charCode.toString(16).toUpperCase();
+                    if(s.length < 2)
+                    {
+                        encoded += "0";
+                    }
+                    encoded += s;
+                }
+            }
+            else if(charCode < 0x0800)
+            {
+                x = (charCode >> 6) | 0xC0;
+                encoded += "%" + x.toString(16).toUpperCase();
+                x = (charCode & 0x003F) | 0x80;
+                encoded += "%"+x.toString(16).toUpperCase();
+            }
+            else if ( (charCode & 0xFC00) != 0xD800)
+            {
+                x = (charCode >> 12) | 0xE0;
+                encoded += "%"+x.toString(16).toUpperCase();
+                x = ((charCode >> 6) & 0x003F) | 0x80;
+                encoded += "%"+x.toString(16).toUpperCase();
+                x = (charCode & 0x003F) | 0x80;
+                encoded += "%"+x.toString(16).toUpperCase();
+            }
+            else
+            {
+                if(i < url.length-1)
+                {
+                    charCode = (charCode & 0x03FF) << 10;
+                    i++;
+                    charCode = charCode | (url.charCodeAt(i) & 0x03FF);
+                    charCode += 0x10000;
+                    x = (charCode >> 18) | 0xF0;
+                    encoded += "%"+x.toString(16).toUpperCase();
+                    x = ((charCode >> 12) & 0x003F) | 0x80;
+                    encoded += "%"+x.toString(16).toUpperCase();
+                    x = ((charCode >> 6) & 0x003F) | 0x80;
+                    encoded += "%"+x.toString(16).toUpperCase();
+                    x = (charCode & 0x003F) | 0x80;
+                    encoded += "%"+x.toString(16).toUpperCase();
+                }
+            }
+        }
+        return encoded;
+    }
+    
+    function BlindLoggingClass()
+    {
+        this.log = function() {};
+        this.error = function() {};
+    }
+    
+    var blindLogging = new BlindLoggingClass();
+    
+    function log()
+    {
+        if(m_consoleLogging)
+        {
+            if(window.console)
+            {
+                return window.console;
+            }
+        }
+        return blindLogging;
+    }
+
+}

@@ -1,0 +1,11 @@
+FIREBREATH_FIND_COMMANDS()
+
+message(STATUS "Code signing for ${PROJECT_NAME}")
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMENT "------------ CODE SIGNING"
+
+    COMMAND codesign -s ${FBMAC_CODE_SIGNING_AUTHOROTY} ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}.plugin
+
+)

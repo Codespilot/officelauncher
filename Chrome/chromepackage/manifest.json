@@ -1,0 +1,9 @@
+{
+  "name": "Office Launcher Plug-In",
+  "version": "${FBSTRING_PLUGIN_VERSION}",
+  "description": "Launche productivity applications on a URL by JavaScript",
+
+	"plugins": [
+    { "path": "npOfficeLauncherPlugIn.dll", "public": true }
+  ]
+}

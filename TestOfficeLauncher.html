@@ -1,0 +1,44 @@
+<html>
+<head>
+</head>
+<body onload="ol.setConsoleLoggingEnabled(document.getElementById('consoleLogging').checked);">
+<script src="OfficeLauncher.js" type="text/javascript"></script>
+<script>
+// instantiate the OfficeLauncher object
+var ol = new OfficeLauncher();
+function editDoc()
+{
+    var result = ol.EditDocument(document.getElementById('openUrl').value);
+    if(result)
+    {
+        alert("Successfully passed URL to Office for editing.");
+    }
+    else
+    {
+        alert("Failed passing URL to Office for editing.");
+    }
+}
+function viewDoc()
+{
+    var result = ol.ViewDocument(document.getElementById('openUrl').value);
+    if(result)
+    {
+        alert("Successfully passed URL to Office for viewing.");
+    }
+    else
+    {
+        alert("Failed passing URL to Office for viewing.");
+    }
+}
+</script>
+<p>
+Document:<br/>
+URL <input type="text" name="openUrl" id="openUrl" size="100" /><br/>
+<input type="checkbox" name="consoleLogging" id="consoleLogging" onclick="ol.setConsoleLoggingEnabled(this.checked);" /> Debug console logging<br/>
+<button type="button" onclick="editDoc();">Edit</button> &nbsp; &nbsp; <button type="button" onclick="viewDoc();">View</button>
+</p>
+Rules:<br/>
+Rule Set <input type="text" name="ruleSet" id="ruleSet" size="100" /><br/>
+<button type="button" onclick="ol.setRules(document.getElementById('ruleSet').value);">Replace</button> &nbsp; &nbsp; <button type="button" onclick="ol.addRules(document.getElementById('ruleSet').value);">Add</button>
+</body>
+</html>
