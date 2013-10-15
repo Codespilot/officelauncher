@@ -22,12 +22,17 @@ function OfficeLauncher()
     {
         m_ruleSet = {};
         applyRules(rules);
-    }
+    };
     
     this.addRules = function(rules)
     {
         applyRules(rules);
-    }
+    };
+    
+    this.isAvailable = function()
+    {
+        return isAvailableOnPlatform();
+    };
 
 // private
     var ACTIVEX_PROGID = {};
@@ -119,6 +124,42 @@ function OfficeLauncher()
             }
             return m_control;
         }
+    }
+    
+    function isAvailableOnPlatform()
+    {
+        log().log("Detecting availability on this platform.");
+        var pluginOrder = getPluginOrder();
+        log().log("PlugIn order: ",pluginOrder);
+        if(window.ActiveXObject)
+        {
+            log().log("Using ActiveX on this platform. Trying to create Acrive-X object to detect if launcher is available on this platform.");
+            m_control = createActiveXControl(pluginOrder);
+            if(!m_control)
+            {
+                log().log("Successfully created ActiveX object. OfficeLauncher is available on this platform.");
+                return true;
+            }
+        }
+        else
+        {
+            log().log("Using NPAPI on this platform.");
+            for(var i = 0; i < pluginOrder.length; i++)
+            {
+                var pluginTypeId = pluginOrder[i];
+                var mimetype = NPAPI_MIMETYPE[pluginTypeId];
+                if(mimetype)
+                {
+                    log().log("Checking availability of "+mimetype);
+                    if(isPluginAvailable(mimetype))
+                    {
+                        log().log("Is available. OfficeLauncher is available on this platform.");
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     
     function createActiveXControl(pluginOrder)

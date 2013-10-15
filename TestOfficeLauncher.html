@@ -30,6 +30,11 @@ function viewDoc()
         alert("Failed passing URL to Office for viewing.");
     }
 }
+function checkAvailability()
+{
+    var available = ol.isAvailable();
+    document.getElementById('availability').innerHTML = available ? "yes" : no;
+}
 </script>
 <p>
 Document:<br/>
@@ -37,8 +42,14 @@ URL <input type="text" name="openUrl" id="openUrl" size="100" /><br/>
 <input type="checkbox" name="consoleLogging" id="consoleLogging" onclick="ol.setConsoleLoggingEnabled(this.checked);" /> Debug console logging<br/>
 <button type="button" onclick="editDoc();">Edit</button> &nbsp; &nbsp; <button type="button" onclick="viewDoc();">View</button>
 </p>
+<p>
+Availability:<br/>
+<button type="button" onclick="checkAvailability();">Detect</button> &nbsp; &nbsp; Availability: <span id="availability">Undetected</span><br/>
+</p>
+<p>
 Rules:<br/>
 Rule Set <input type="text" name="ruleSet" id="ruleSet" size="100" /><br/>
 <button type="button" onclick="ol.setRules(document.getElementById('ruleSet').value);">Replace</button> &nbsp; &nbsp; <button type="button" onclick="ol.addRules(document.getElementById('ruleSet').value);">Add</button>
+</p>
 </body>
 </html>
