@@ -33,6 +33,16 @@ function OfficeLauncher()
     {
         return isAvailableOnPlatform();
     };
+    
+    this.getLastControlResult = function()
+    {
+        return m_lastControlResult;
+    };
+    
+    this.isControlBlocked = function()
+    {
+        return (m_isFirefox || m_isChrome) && m_controlNotActivated;
+    };
 
 // private
     var ACTIVEX_PROGID = {};
@@ -43,23 +53,27 @@ function OfficeLauncher()
     NPAPI_MIMETYPE["ol"] = "application/x-officelauncher";
     
     var m_userAgent = navigator.userAgent.toLowerCase();
-    var m_isIE = (m_userAgent.indexOf("msie") != -1);
-    var m_isChrome = (m_userAgent.indexOf("chrome") != -1);
-    var m_isFirefox = (m_userAgent.indexOf("firefox") != -1);
-    var m_isSafari = (m_userAgent.indexOf("safari") != -1) && (!m_isChrome);
-    var m_isMac = (m_userAgent.indexOf("mac") != -1);
-    var m_isWin = (m_userAgent.indexOf("win") != -1);
+    var m_isIE = (m_userAgent.indexOf('msie') !== -1) || (m_userAgent.indexOf('trident') !== -1);
+    var m_isOpera = (m_userAgent.indexOf('opr') !== -1);
+    var m_isChrome = (m_userAgent.indexOf('chrome') !== -1) && (!m_isOpera);
+    var m_isFirefox = (m_userAgent.indexOf('firefox') !== -1);
+    var m_isSafari = (m_userAgent.indexOf('safari') !== -1) && (!(m_isChrome||m_isOpera));
+    var m_isMac = (m_userAgent.indexOf('mac') !== -1);
+    var m_isWin = (m_userAgent.indexOf('win') !== -1);
     
     var m_ruleSet = {};
     var m_pluginOrder = null;
     var m_control = null;
     var m_consoleLogging = false;
+    var m_lastControlResult = null;
+    var m_controlNotActivated = false;
     
     // apply default rule set
     applyRules("ax=sp,ol;npapi=sp,ol;npapi.chrome.mac=ol;sp,ol");
 
     function openDocument(url,readOnly)
     {
+        m_controlNotActivated = false;
         log().log("Opening url = ",url," readOnly = ",readOnly);
         var control = getControl();
         if(control)
@@ -71,11 +85,25 @@ function OfficeLauncher()
                 var result;
                 if(readOnly)
                 {
-                    result = control.ViewDocument(encodedUrl);
+                    if(!control.ViewDocument)
+                    {
+                        m_controlNotActivated = true;
+                    }
+                    else
+                    {
+                        result = control.ViewDocument(encodedUrl);
+                    }
                 }
                 else
                 {
-                    result = control.EditDocument(encodedUrl);
+                    if(!control.EditDocument)
+                    {
+                        m_controlNotActivated = true;
+                    }
+                    else
+                    {
+                        result = control.EditDocument(encodedUrl);
+                    }
                 }
                 log().log("Control object invoked successfully. result = ",result);
                 if (result === true || result === 0 || result === "0")
@@ -104,7 +132,7 @@ function OfficeLauncher()
         log().log("No control object available. Creating new one.");
         var pluginOrder = getPluginOrder();
         log().log("PlugIn order: ",pluginOrder);
-        if(window.ActiveXObject)
+        if(window.ActiveXObject !== undefined)
         {
             log().log("Using ActiveX on this platform.");
             m_control = createActiveXControl(pluginOrder);
@@ -131,11 +159,11 @@ function OfficeLauncher()
         log().log("Detecting availability on this platform.");
         var pluginOrder = getPluginOrder();
         log().log("PlugIn order: ",pluginOrder);
-        if(window.ActiveXObject)
+        if(window.ActiveXObject !== undefined)
         {
             log().log("Using ActiveX on this platform. Trying to create Acrive-X object to detect if launcher is available on this platform.");
             m_control = createActiveXControl(pluginOrder);
-            if(!m_control)
+            if(m_control)
             {
                 log().log("Successfully created ActiveX object. OfficeLauncher is available on this platform.");
                 return true;
@@ -259,7 +287,7 @@ function OfficeLauncher()
     
     function getTechnologySelector()
     {
-        return window.ActiveXObject ? "ax" : "npapi";
+        return (window.ActiveXObject !== undefined) ? "ax" : "npapi";
     }
     
     function getBrowserSelector()

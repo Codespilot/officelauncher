@@ -15,7 +15,14 @@ function editDoc()
     }
     else
     {
-        alert("Failed passing URL to Office for editing.");
+        if(ol.isControlBlocked())
+        {
+            alert("Please allow the Plug-In to run.");
+        }
+        else
+        {
+            alert("Failed passing URL to Office for editing.");
+        }
     }
 }
 function viewDoc()
@@ -27,7 +34,14 @@ function viewDoc()
     }
     else
     {
-        alert("Failed passing URL to Office for viewing.");
+        if(ol.isControlBlocked())
+        {
+            alert("Please allow the Plug-In to run.");
+        }
+        else
+        {
+            alert("Failed passing URL to Office for viewing.");
+        }
     }
 }
 function checkAvailability()
