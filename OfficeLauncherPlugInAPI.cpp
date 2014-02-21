@@ -24,6 +24,7 @@
 #include "APITypes.h"
 #include "BrowserHost.h"
 #include "DOM/Window.h"
+#include "SimpleUri.h"
 #ifdef FB_WIN
 #include "AXDOM/Window.h"
 #endif
@@ -90,8 +91,12 @@ bool OfficeLauncherPlugInAPI::confirmOpen(const std::string& url_utf8)
 {
     FB::DOM::WindowPtr domWindow = m_host->getDOMWindow();
     std::wstring decodedURL = domWindow->callMethod<std::wstring>("decodeURIComponent", FB::variant_list_of(url_utf8));
+    SimpleUri uri(decodedURL);
     std::wstring msg = L"Do you want to open this file?\n\n";
-    msg.append(decodedURL);
+    msg.append(L"File name: ");
+    msg.append(uri.getFilename());
+    msg.append(L"\nFrom: ");
+    msg.append(uri.getServer());
     msg.append(L"\n\nSome files can harm your computer. If you do not fully trust the source, do not open the file.");
     const std::string msg_utf8 = FB::wstring_to_utf8(msg);
 #ifdef FB_WIN
