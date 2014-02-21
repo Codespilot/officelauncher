@@ -72,6 +72,8 @@ set(WIX_HEAT_FLAGS
     -dr INSTALLDIR      # Set the directory ID to put the files in
     )
 
+set(WIX_LINK_FLAGS ${WIX_LINK_FLAGS} -dSCHEMAHANDLERSRC=${FB_BIN_DIR}/../${CMAKE_CFG_INTDIR}/)
+
 add_wix_installer( ${PLUGIN_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/OfficeLauncherPlugInInstaller.wxs
     PluginDLLGroup

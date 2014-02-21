@@ -55,6 +55,11 @@ SET( SOURCES
 # depending on the platform
 include_platform()
 
+# include the platform dependant SchemaHandler project
+include_external_msproject(
+        "Office launcher Schema Handler"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Win/OfficeLauncherSchemaHandler/OfficeLauncherSchemaHandler.vcxproj")
+
 #this will build a Chrome package
 #add_chrome_package(${PLUGIN_NAME}
 #        ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/

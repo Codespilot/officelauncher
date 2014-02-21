@@ -9,12 +9,17 @@
                 Maximum="${FBSTRING_PLUGIN_VERSION}" IncludeMaximum="yes"
                 OnlyDetect="no" IgnoreRemoveFailure="yes"
                 MigrateFeatures="yes" />
+            <UpgradeVersion
+                Property="NEWER_VERSION_FOUND"
+                Minimum="${FBSTRING_PLUGIN_VERSION}" IncludeMinimum="no" />
         </Upgrade>
-		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
+        <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
         <InstallExecuteSequence>
+            <Custom Action='PreventDowngrading' After='FindRelatedProducts'>NEWER_VERSION_FOUND</Custom>
             <RemoveExistingProducts After="InstallInitialize" />
             <InstallExecute After="RemoveExistingProducts" />
         </InstallExecuteSequence>
+        <CustomAction Id='PreventDowngrading' Error='A later version of [ProductName] is already installed.' />
         <Media Id="1" Cabinet="${PLUGIN_NAME}.cab" EmbedCab="yes" />
 
         <Directory Id="TARGETDIR" Name="SourceDir">
@@ -30,6 +35,7 @@
                             Value="${FBSTRING_PLUGIN_VERSION}"
                             KeyPath="yes" />
                     </Component>
+
                     <Directory Id="PluginNameDir" Name="${FBSTRING_PluginName}">
                         <Component Id="PluginNameDirComp" Guid="*">
                             <RemoveFolder Id="RemovePluginNameDir" On="uninstall" />
@@ -52,7 +58,6 @@
                                     Value="${FBSTRING_PLUGIN_VERSION}"
                                     KeyPath="yes" />
                             </Component>
-
                             <!-- Put Additional files here: -->
                             <!-- example:
                             <Component Id="UniqueComponentId" Guid="*">
@@ -62,6 +67,45 @@
                             <!--  -->
                         </Directory>
                     </Directory>
+
+                    <Directory Id="SchemaHandlerNameDir" Name="OfficeLauncherSchemaHandler">
+                        <Component Id="SchemaHandlerNameDirComp" Guid="*">
+                            <RemoveFolder Id="RemoveSchemaHandlerNameDir" On="uninstall" />
+                            <RegistryValue
+                                Root="HKCU"
+                                Key="SOFTWARE\${COMPANY_NAME}\OfficeLauncherSchemaHandler"
+                                Name="Uninstall"
+                                Type="string"
+                                Value="${FBSTRING_PLUGIN_VERSION}"
+                                KeyPath="yes" />
+                        </Component>
+                        <Directory Id="INSTALLDIR_SCHEMAHANDLER" Name="${FBSTRING_PLUGIN_VERSION}">
+                            <Component Id="InstallDirSchemaHandlerComp" Guid="*">
+                                <RemoveFolder Id="RemoveInstallDirSchemaHandler" On="uninstall" />
+                                <RegistryValue
+                                    Root="HKCU"
+                                    Key="SOFTWARE\${COMPANY_NAME}\OfficeLauncherSchemaHandler\${FBSTRING_PLUGIN_VERSION}"
+                                    Name="Uninstall"
+                                    Type="string"
+                                    Value="${FBSTRING_PLUGIN_VERSION}"
+                                    KeyPath="yes" />
+                            </Component>
+                            <Component Id="SchemaHandler" Guid="{46A7DD67-05A2-44F2-8A4D-8111A4C12CFF}">
+                                <File Id="SchemaHandlerExe" Source="$(var.SCHEMAHANDLERSRC)\OfficeLauncherSchemaHandler.exe" Checksum="yes"/>
+                                <RegistryKey Root="HKCU" Key="Software\Classes\officelauncher-edit" Action="createAndRemoveOnUninstall">
+                                    <RegistryValue Type="string" Value="URL: Office Launcher Protocol for Editing" KeyPath="yes" />
+                                    <RegistryValue Type="string" Name="URL Protocol" Value=""/>
+                                </RegistryKey>
+                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-edit\shell\open\command" Value="[#SchemaHandlerExe] &quot;%1&quot;" Type="string" Action="write"/>
+                                <RegistryKey Root="HKCU" Key="Software\Classes\officelauncher-read" Action="createAndRemoveOnUninstall">
+                                    <RegistryValue Type="string" Value="URL: Office Launcher Protocol for Reading"/>
+                                    <RegistryValue Type="string" Name="URL Protocol" Value=""/>
+                                </RegistryKey>
+                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-read\shell\open\command" Value="[#SchemaHandlerExe] &quot;%1&quot;" Type="string" Action="write"/>
+                            </Component>
+                        </Directory>
+                    </Directory>
+                    
                 </Directory>
             </Directory>
         </Directory>
@@ -69,8 +113,11 @@
         <Feature Id="MainPluginFeature" Title="${FBSTRING_ProductName}" Level="1">
             <ComponentRef Id="InstallDirComp"/>
             <ComponentRef Id="PluginNameDirComp"/>
+            <ComponentRef Id="InstallDirSchemaHandlerComp"/>
+            <ComponentRef Id="SchemaHandlerNameDirComp"/>
             <ComponentRef Id="CompanyDirComp"/>
             <ComponentGroupRef Id="PluginDLLGroup"/>
+            <ComponentRef Id="SchemaHandler"/>
         </Feature>
     </Product>
 </Wix>
