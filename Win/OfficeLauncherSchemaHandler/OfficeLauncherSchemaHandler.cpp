@@ -291,7 +291,7 @@ int _tmain(int argc, _TCHAR* argv[])
         readOnly = false;
         encodedUrl = officeLauncherUri.substr(20,officeLauncherUri.length()-20);
     }
-    else if(officeLauncherUri.substr(0,20) == L"officelauncher-read:")
+    else if(officeLauncherUri.substr(0,20) == L"officelauncher-view:")
     {
         readOnly = true;
         encodedUrl = officeLauncherUri.substr(20,officeLauncherUri.length()-20);
