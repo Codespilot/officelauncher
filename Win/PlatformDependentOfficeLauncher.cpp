@@ -240,29 +240,37 @@ bool PlatformDependentOfficeLauncher::progIdEnabled(const std::wstring& progid)
     return false;
 }
 
-void StringReplace(std::wstring& str, const std::wstring& oldStr, const std::wstring& newStr)
-{
-  size_t pos = 0;
-  while((pos = str.find(oldStr, pos)) != std::wstring::npos)
-  {
-     str.replace(pos, oldStr.length(), newStr);
-     pos += newStr.length();
-  }
-}
-
 bool PlatformDependentOfficeLauncher::formatMessage(const std::wstring& source, const std::wstring& param1, const std::wstring& param2, std::wstring& dest)
 {
-    dest = source;
-    StringReplace(dest, L"%1", param1);
-    StringReplace(dest, L"%2", param2);
-    StringReplace(dest, L"%3", L"");
-    StringReplace(dest, L"%4", L"");
-    StringReplace(dest, L"%5", L"");
-    StringReplace(dest, L"%6", L"");
-    StringReplace(dest, L"%7", L"");
-    StringReplace(dest, L"%8", L"");
-    StringReplace(dest, L"%9", L"");
-    StringReplace(dest, L"%0", L"");
+    dest = L"";
+    for (std::size_t i = 0; i < source.size(); ++i)
+    {
+        if ( (source[i] == '%') && (i + 2 <= source.size()) )
+        {
+            int paramId = 0;
+            std::wistringstream is(source.substr(i + 1, 1));
+            if (is >> std::dec >> paramId)
+            {
+                if(paramId == 1)
+                {
+                    dest += param1;
+                }
+                else if(paramId == 2)
+                {
+                    dest += param2;
+                }
+                i += 1;
+            }
+            else
+            {
+                dest += source[i];
+            }
+        }
+        else
+        {
+            dest += source[i];
+        }
+    }
     return true;
 }
 
