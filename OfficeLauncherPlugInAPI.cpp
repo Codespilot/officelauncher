@@ -31,10 +31,13 @@
 
 #include "OfficeLauncherPlugInAPI.h"
 #include "OfficeLauncherPlugInErrorCodes.h"
+#include "OfficeLauncherCommons.h"
 
 #ifdef FB_WIN
 #include "windows.h"
 #endif
+
+using namespace OfficeLauncherCommons;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @fn long OfficeLauncherPlugInAPI::viewDocument(const std::string& url_utf8)
@@ -49,11 +52,20 @@ long OfficeLauncherPlugInAPI::viewDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(url_utf8) || confirmOpen(url_utf8)))
+    SimpleUri decodedUri(urlDecode(utf8_to_wstring(url_utf8)));
+    if(!decodedUri.isValid())
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
+    if(!decodedUri.isHttpOrHttpsSchema())
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
+    if(!( m_platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
     {
         return OLP_ERROR_USER_REJECTED;
     }
-    return m_platformOfficeLauncher.viewDocument(url_utf8);
+    return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,11 +81,20 @@ long OfficeLauncherPlugInAPI::editDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(url_utf8) || confirmOpen(url_utf8)))
+    SimpleUri decodedUri(urlDecode(utf8_to_wstring(url_utf8)));
+    if(!decodedUri.isValid())
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
+    if(!decodedUri.isHttpOrHttpsSchema())
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
+    if(!( m_platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
     {
         return OLP_ERROR_USER_REJECTED;
     }
-    return m_platformOfficeLauncher.editDocument(url_utf8);
+    return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), false);
 }
 
 bool confirmOpenActiveX(const std::string& url_utf8)
@@ -87,18 +108,16 @@ bool confirmOpenActiveX(const std::string& url_utf8)
 /// @brief  Asks the user for  permission to open the given URL.
 ///         Invokes the JavaScript confirm method for user interaction.
 ///////////////////////////////////////////////////////////////////////////////
-bool OfficeLauncherPlugInAPI::confirmOpen(const std::string& url_utf8)
+bool OfficeLauncherPlugInAPI::confirmOpen(SimpleUri& decodedUri)
 {
-    FB::DOM::WindowPtr domWindow = m_host->getDOMWindow();
-    std::wstring decodedURL = domWindow->callMethod<std::wstring>("decodeURIComponent", FB::variant_list_of(url_utf8));
-    SimpleUri uri(decodedURL);
     std::wstring msg = L"Do you want to open this file?\n\n";
     msg.append(L"File name: ");
-    msg.append(uri.getFilename());
+    msg.append(decodedUri.getFilename());
     msg.append(L"\nFrom: ");
-    msg.append(uri.getServer());
+    msg.append(decodedUri.getServer());
     msg.append(L"\n\nSome files can harm your computer. If you do not fully trust the source, do not open the file.");
     const std::string msg_utf8 = FB::wstring_to_utf8(msg);
+    FB::DOM::WindowPtr domWindow = m_host->getDOMWindow();
 #ifdef FB_WIN
     if(typeid(*domWindow) == typeid(FB::ActiveX::AXDOM::Window))
     {

@@ -17,16 +17,14 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "JSObject.h"
-#include "variant_list.h"
-#include "DOM/Document.h"
-#include "global/config.h"
-
 #include "PlatformDependentOfficeLauncher.h"
 #include "../OfficeLauncherPlugInErrorCodes.h"
-#include "../SimpleUri.h"
+#include "../OfficeLauncherCommons.h"
+#include "utf8.h"
 #include <CoreFoundation/CoreFoundation.h>
 #include <Carbon/Carbon.h>
+
+using namespace OfficeLauncherCommons;
 
 PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
 {
@@ -54,28 +52,17 @@ PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
     m_extensionToBundleMap[".ppsm"] = "com.microsoft.Powerpoint";
 }
 
-int PlatformDependentOfficeLauncher::viewDocument(const std::string& url_utf8)
-{
-    return openDocument(url_utf8, true);
-}
-
-int PlatformDependentOfficeLauncher::editDocument(const std::string& url_utf8)
-{
-    return openDocument(url_utf8, false);
-}
-
-bool PlatformDependentOfficeLauncher::suppressOpenWarning(const std::string& url_utf8)
+bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decodedUri)
 {
     Boolean resultValid;
     Boolean result = CFPreferencesGetAppBooleanValue(CFSTR("SuppressOpenWarning"), CFSTR("com.OfficeLauncherPlugIn"), &resultValid);
     return resultValid && result;
 }
 
-int PlatformDependentOfficeLauncher::openDocument(const std::string& url_utf8, bool readOnly)
+int PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool readOnly)
 {
     // get file extension
-    const std::wstring url = FB::utf8_to_wstring(url_utf8);
-    SimpleUri decodedUri(url);
+    SimpleUri decodedUri(urlDescode(url));
     if(!decodedUri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
@@ -84,9 +71,9 @@ int PlatformDependentOfficeLauncher::openDocument(const std::string& url_utf8, b
     {
         return OLP_ERROR_INVALID_URL;
     }
-    
+
     // get bundleId of associated application
-    const std::string url_extension = FB::wstring_to_utf8(decodedUri.getFileExtension());
+    const std::string url_extension = wstring_to_utf8(decodedUri.getFileExtension());
     std::map<std::string, std::string>::iterator itBundleIds = m_extensionToBundleMap.find(url_extension);
     if(itBundleIds == m_extensionToBundleMap.end())
     {
@@ -156,7 +143,7 @@ int PlatformDependentOfficeLauncher::openDocument(const std::string& url_utf8, b
         AEDisposeDesc(&event);
         return status;
     }
-    
+
     // dispose event and return result
     AEDisposeDesc(&event);
 

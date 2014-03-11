@@ -33,7 +33,7 @@ file (GLOB GENERAL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     [^.]*.js
     )
 
-include_directories(${PLUGIN_INCLUDE_DIRS})
+include_directories(${PLUGIN_INCLUDE_DIRS} ${FB_SOURCE_DIR}/3rdParty/utf8)
 
 # Generated files are stored in ${GENERATED} by the project configuration
 SET_SOURCE_FILES_PROPERTIES(

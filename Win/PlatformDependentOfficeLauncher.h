@@ -18,8 +18,11 @@
  */
 
 #include <string>
+#include <vector>
+#include <iterator>
 #include "windows.h"
 #include <WinReg.h>
+#include "../SimpleUri.h"
 
 #ifndef H_PlatformDependentOfficeLauncher
 #define H_PlatformDependentOfficeLauncher
@@ -29,14 +32,11 @@ class PlatformDependentOfficeLauncher
 
 public:
     PlatformDependentOfficeLauncher();
-    long viewDocument(const std::string& url_utf8);
-    long editDocument(const std::string& url_utf8);
-    bool suppressOpenWarning(const std::string& url_utf8);
+    bool suppressOpenWarning(const SimpleUri& decodedUri);
+    long openDocument(const std::wstring& url, bool readOnly);
 
 private:
-    //std::map<std::wstring, bool> m_validProgIds;
     std::vector<std::wstring> m_validProgIds;
-    long openDocument(const std::string& url_utf8, bool readOnly);
     bool readRegValueSZ(HKEY key, const std::wstring& path, const std::wstring& name, std::wstring& value);
     bool readRegValueDWORD(HKEY key, const std::wstring& path, const std::wstring& name, DWORD& value);
     bool progIdEnabled(const std::wstring& progid);

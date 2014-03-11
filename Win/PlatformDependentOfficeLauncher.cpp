@@ -17,18 +17,15 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "JSObject.h"
-#include "variant_list.h"
-#include "DOM/Document.h"
-#include "global/config.h"
-
 #include "PlatformDependentOfficeLauncher.h"
 #include "../OfficeLauncherPlugInErrorCodes.h"
-#include "../SimpleUri.h"
+#include "../OfficeLauncherCommons.h"
 #include <strsafe.h>
 #include <string>
 #include <iostream>
+#include <sstream>
 
+using namespace OfficeLauncherCommons;
 
 PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
 {
@@ -47,29 +44,18 @@ PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
     m_validProgIds.push_back(L"Access.Application");
 }
 
-long PlatformDependentOfficeLauncher::viewDocument(const std::string& url_utf8)
-{
-    return openDocument(url_utf8, true);
-}
-
-long PlatformDependentOfficeLauncher::editDocument(const std::string& url_utf8)
-{
-    return openDocument(url_utf8, false);
-}
-
-bool PlatformDependentOfficeLauncher::suppressOpenWarning(const std::string& url_utf8)
+bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decodedUri)
 {
     DWORD value = 0;
     bool readResult = readRegValueDWORD(HKEY_CURRENT_USER, L"Software\\Office Launcher Plug-In", L"SuppressOpenWarning", value);
     return readResult && (value == 1);
 }
 
-long PlatformDependentOfficeLauncher::openDocument(const std::string& url_utf8, bool readOnly)
+long PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool readOnly)
 {
 
     // get file  extension
-    const std::wstring url = FB::utf8_to_wstring(url_utf8);
-    SimpleUri decodedUri(url);
+    SimpleUri decodedUri(urlDecode(url));
     if(!decodedUri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
@@ -434,8 +420,6 @@ HDDEDATA CALLBACK nopDDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, H
 bool PlatformDependentOfficeLauncher::executeDDE(const std::wstring& ddeCommand, const std::wstring& application, const std::wstring& topic)
 {
     bool result = false;
-
-    const std::string debug_ddeCommand = FB::wstring_to_utf8(ddeCommand);
 
     DWORD ddeInstance = 0;
     if(DdeInitialize(&ddeInstance, nopDDECallback, CBF_FAIL_ALLSVRXACTIONS, 0L) != DMLERR_NO_ERROR)

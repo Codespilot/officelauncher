@@ -79,7 +79,7 @@ private:
     FB::BrowserHostPtr m_host;
     PlatformDependentOfficeLauncher m_platformOfficeLauncher;
 
-	bool confirmOpen(const std::string& url_utf8);
+	bool confirmOpen(SimpleUri& decodedUri);
 
 };
 

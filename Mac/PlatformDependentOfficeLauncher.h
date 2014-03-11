@@ -18,6 +18,7 @@
  */
 
 #include <string>
+#include "../SimpleUri.h"
 
 #ifndef H_PlatformDependentOfficeLauncher
 #define H_PlatformDependentOfficeLauncher
@@ -27,12 +28,10 @@ class PlatformDependentOfficeLauncher
 
 public:
     PlatformDependentOfficeLauncher();
-    int viewDocument(const std::string& url_utf8);
-    int editDocument(const std::string& url_utf8);
-    bool suppressOpenWarning(const std::string& url_utf8);
+    bool suppressOpenWarning(const SimpleUri& url_utf8);
+    int openDocument(const std::wstring& url, bool readOnly);
 
 private:
-    int openDocument(const std::string& url_utf8, bool readOnly);
     std::map<std::string, std::string> m_extensionToBundleMap;
 
 };
