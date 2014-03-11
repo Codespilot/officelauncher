@@ -26,6 +26,9 @@
 #include <sstream>
 #include "../PlatformDependentOfficeLauncher.h"
 #include "../../OfficeLauncherPlugInErrorCodes.h"
+#include "../../OfficeLauncherCommons.h"
+
+using namespace OfficeLauncherCommons;
 
 #define MAX_URL_LENGTH 1024
 
@@ -85,7 +88,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         errorMessage(L"URL too long.");
         return 1;
     }
-    SimpleUri decodedUri(PlatformDependentOfficeLauncher::urlDecode(encodedUrl));
+    SimpleUri decodedUri(urlDecode(encodedUrl));
     if(!decodedUri.isValid())
     {
         errorMessage(L"Invalid Office-Launcher URL.");
