@@ -46,7 +46,7 @@ bool confirmOpen(SimpleUri& decodedUri)
 
 void errorMessage(const std::wstring& message)
 {
-    int result = MessageBox(NULL, message.c_str(), L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(NULL, message.c_str(), L"Error", MB_OK | MB_ICONERROR);
 }
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
