@@ -62,7 +62,7 @@ bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decod
 int PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool readOnly)
 {
     // get file extension
-    SimpleUri decodedUri(urlDescode(url));
+    SimpleUri decodedUri(urlDecode(url));
     if(!decodedUri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
@@ -83,6 +83,7 @@ int PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool 
 
     // convert utf8 encoded URL to UniChar string
     std::basic_string<UniChar> url_unichar;
+    std::string url_utf8 = wstring_to_utf8(url);
     utf8::utf8to16(url_utf8.begin(), url_utf8.end(), std::back_inserter(url_unichar));
     const UniChar* url_uni = url_unichar.c_str();
 

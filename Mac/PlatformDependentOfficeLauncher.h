@@ -18,6 +18,7 @@
  */
 
 #include <string>
+#include <map>
 #include "../SimpleUri.h"
 
 #ifndef H_PlatformDependentOfficeLauncher
