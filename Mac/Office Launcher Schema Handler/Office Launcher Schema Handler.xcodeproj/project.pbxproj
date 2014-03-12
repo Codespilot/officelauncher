@@ -1,0 +1,470 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BC4F150518D0A10800AD4D09 /* PlatformDependentOfficeLauncher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC4F150318D0A10800AD4D09 /* PlatformDependentOfficeLauncher.cpp */; };
+		BC4F150B18D0A14C00AD4D09 /* OfficeLauncherCommons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC4F150618D0A14C00AD4D09 /* OfficeLauncherCommons.cpp */; };
+		BC4F150C18D0A14C00AD4D09 /* SimpleUri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC4F150918D0A14C00AD4D09 /* SimpleUri.cpp */; };
+		BCB5650018B8FEC00049AE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB564FF18B8FEC00049AE3A /* Cocoa.framework */; };
+		BCB5650A18B8FEC00049AE3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCB5650818B8FEC00049AE3A /* InfoPlist.strings */; };
+		BCB5650C18B8FEC00049AE3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB5650B18B8FEC00049AE3A /* main.m */; };
+		BCB5651018B8FEC00049AE3A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = BCB5650E18B8FEC00049AE3A /* Credits.rtf */; };
+		BCB5651618B8FEC00049AE3A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCB5651418B8FEC00049AE3A /* MainMenu.xib */; };
+		BCB5651818B8FEC00049AE3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCB5651718B8FEC00049AE3A /* Images.xcassets */; };
+		BCB5651F18B8FEC00049AE3A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB5651E18B8FEC00049AE3A /* XCTest.framework */; };
+		BCB5652018B8FEC00049AE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB564FF18B8FEC00049AE3A /* Cocoa.framework */; };
+		BCB5653818B8FFBF0049AE3A /* OLSHAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BCB5653718B8FFBF0049AE3A /* OLSHAppDelegate.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BCB5652118B8FEC00049AE3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCB564F418B8FEC00049AE3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BCB564FB18B8FEC00049AE3A;
+			remoteInfo = "Office Launcher Schema Handler";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BC4F150318D0A10800AD4D09 /* PlatformDependentOfficeLauncher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlatformDependentOfficeLauncher.cpp; path = ../../PlatformDependentOfficeLauncher.cpp; sourceTree = "<group>"; };
+		BC4F150418D0A10800AD4D09 /* PlatformDependentOfficeLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlatformDependentOfficeLauncher.h; path = ../../PlatformDependentOfficeLauncher.h; sourceTree = "<group>"; };
+		BC4F150618D0A14C00AD4D09 /* OfficeLauncherCommons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OfficeLauncherCommons.cpp; path = ../../../OfficeLauncherCommons.cpp; sourceTree = "<group>"; };
+		BC4F150718D0A14C00AD4D09 /* OfficeLauncherCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfficeLauncherCommons.h; path = ../../../OfficeLauncherCommons.h; sourceTree = "<group>"; };
+		BC4F150818D0A14C00AD4D09 /* OfficeLauncherPlugInErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfficeLauncherPlugInErrorCodes.h; path = ../../../OfficeLauncherPlugInErrorCodes.h; sourceTree = "<group>"; };
+		BC4F150918D0A14C00AD4D09 /* SimpleUri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleUri.cpp; path = ../../../SimpleUri.cpp; sourceTree = "<group>"; };
+		BC4F150A18D0A14C00AD4D09 /* SimpleUri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleUri.h; path = ../../../SimpleUri.h; sourceTree = "<group>"; };
+		BC4F150D18D0A7E100AD4D09 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8.h; path = ../../../../../firebreath/src/3rdParty/utf8/utf8.h; sourceTree = "<group>"; };
+		BCB564FC18B8FEC00049AE3A /* Office Launcher Schema Handler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Office Launcher Schema Handler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCB564FF18B8FEC00049AE3A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BCB5650218B8FEC00049AE3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BCB5650318B8FEC00049AE3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BCB5650418B8FEC00049AE3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BCB5650718B8FEC00049AE3A /* Office Launcher Schema Handler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Office Launcher Schema Handler-Info.plist"; sourceTree = "<group>"; };
+		BCB5650918B8FEC00049AE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BCB5650B18B8FEC00049AE3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BCB5650D18B8FEC00049AE3A /* Office Launcher Schema Handler-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Office Launcher Schema Handler-Prefix.pch"; sourceTree = "<group>"; };
+		BCB5650F18B8FEC00049AE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		BCB5651118B8FEC00049AE3A /* OLSHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OLSHAppDelegate.h; sourceTree = "<group>"; };
+		BCB5651518B8FEC00049AE3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BCB5651718B8FEC00049AE3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BCB5651D18B8FEC00049AE3A /* Office Launcher Schema HandlerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Office Launcher Schema HandlerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCB5651E18B8FEC00049AE3A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BCB5653718B8FFBF0049AE3A /* OLSHAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OLSHAppDelegate.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BCB564F918B8FEC00049AE3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCB5650018B8FEC00049AE3A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCB5651A18B8FEC00049AE3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCB5652018B8FEC00049AE3A /* Cocoa.framework in Frameworks */,
+				BCB5651F18B8FEC00049AE3A /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BCB564F318B8FEC00049AE3A = {
+			isa = PBXGroup;
+			children = (
+				BCB5650518B8FEC00049AE3A /* Office Launcher Schema Handler */,
+				BCB564FE18B8FEC00049AE3A /* Frameworks */,
+				BCB564FD18B8FEC00049AE3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BCB564FD18B8FEC00049AE3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCB564FC18B8FEC00049AE3A /* Office Launcher Schema Handler.app */,
+				BCB5651D18B8FEC00049AE3A /* Office Launcher Schema HandlerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BCB564FE18B8FEC00049AE3A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BCB564FF18B8FEC00049AE3A /* Cocoa.framework */,
+				BCB5651E18B8FEC00049AE3A /* XCTest.framework */,
+				BCB5650118B8FEC00049AE3A /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BCB5650118B8FEC00049AE3A /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BCB5650218B8FEC00049AE3A /* AppKit.framework */,
+				BCB5650318B8FEC00049AE3A /* CoreData.framework */,
+				BCB5650418B8FEC00049AE3A /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		BCB5650518B8FEC00049AE3A /* Office Launcher Schema Handler */ = {
+			isa = PBXGroup;
+			children = (
+				BC4F150D18D0A7E100AD4D09 /* utf8.h */,
+				BC4F150618D0A14C00AD4D09 /* OfficeLauncherCommons.cpp */,
+				BC4F150718D0A14C00AD4D09 /* OfficeLauncherCommons.h */,
+				BC4F150818D0A14C00AD4D09 /* OfficeLauncherPlugInErrorCodes.h */,
+				BC4F150918D0A14C00AD4D09 /* SimpleUri.cpp */,
+				BC4F150A18D0A14C00AD4D09 /* SimpleUri.h */,
+				BC4F150318D0A10800AD4D09 /* PlatformDependentOfficeLauncher.cpp */,
+				BC4F150418D0A10800AD4D09 /* PlatformDependentOfficeLauncher.h */,
+				BCB5653718B8FFBF0049AE3A /* OLSHAppDelegate.mm */,
+				BCB5651118B8FEC00049AE3A /* OLSHAppDelegate.h */,
+				BCB5651418B8FEC00049AE3A /* MainMenu.xib */,
+				BCB5651718B8FEC00049AE3A /* Images.xcassets */,
+				BCB5650618B8FEC00049AE3A /* Supporting Files */,
+			);
+			path = "Office Launcher Schema Handler";
+			sourceTree = "<group>";
+		};
+		BCB5650618B8FEC00049AE3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BCB5650718B8FEC00049AE3A /* Office Launcher Schema Handler-Info.plist */,
+				BCB5650818B8FEC00049AE3A /* InfoPlist.strings */,
+				BCB5650B18B8FEC00049AE3A /* main.m */,
+				BCB5650D18B8FEC00049AE3A /* Office Launcher Schema Handler-Prefix.pch */,
+				BCB5650E18B8FEC00049AE3A /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BCB564FB18B8FEC00049AE3A /* Office Launcher Schema Handler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCB5652D18B8FEC00049AE3A /* Build configuration list for PBXNativeTarget "Office Launcher Schema Handler" */;
+			buildPhases = (
+				BCB564F818B8FEC00049AE3A /* Sources */,
+				BCB564F918B8FEC00049AE3A /* Frameworks */,
+				BCB564FA18B8FEC00049AE3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Office Launcher Schema Handler";
+			productName = "Office Launcher Schema Handler";
+			productReference = BCB564FC18B8FEC00049AE3A /* Office Launcher Schema Handler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BCB5651C18B8FEC00049AE3A /* Office Launcher Schema HandlerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCB5653018B8FEC00049AE3A /* Build configuration list for PBXNativeTarget "Office Launcher Schema HandlerTests" */;
+			buildPhases = (
+				BCB5651918B8FEC00049AE3A /* Sources */,
+				BCB5651A18B8FEC00049AE3A /* Frameworks */,
+				BCB5651B18B8FEC00049AE3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCB5652218B8FEC00049AE3A /* PBXTargetDependency */,
+			);
+			name = "Office Launcher Schema HandlerTests";
+			productName = "Office Launcher Schema HandlerTests";
+			productReference = BCB5651D18B8FEC00049AE3A /* Office Launcher Schema HandlerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BCB564F418B8FEC00049AE3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OLSH;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = OfficeLauncher.org;
+				TargetAttributes = {
+					BCB5651C18B8FEC00049AE3A = {
+						TestTargetID = BCB564FB18B8FEC00049AE3A;
+					};
+				};
+			};
+			buildConfigurationList = BCB564F718B8FEC00049AE3A /* Build configuration list for PBXProject "Office Launcher Schema Handler" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BCB564F318B8FEC00049AE3A;
+			productRefGroup = BCB564FD18B8FEC00049AE3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BCB564FB18B8FEC00049AE3A /* Office Launcher Schema Handler */,
+				BCB5651C18B8FEC00049AE3A /* Office Launcher Schema HandlerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BCB564FA18B8FEC00049AE3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCB5650A18B8FEC00049AE3A /* InfoPlist.strings in Resources */,
+				BCB5651818B8FEC00049AE3A /* Images.xcassets in Resources */,
+				BCB5651018B8FEC00049AE3A /* Credits.rtf in Resources */,
+				BCB5651618B8FEC00049AE3A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCB5651B18B8FEC00049AE3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BCB564F818B8FEC00049AE3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC4F150B18D0A14C00AD4D09 /* OfficeLauncherCommons.cpp in Sources */,
+				BC4F150518D0A10800AD4D09 /* PlatformDependentOfficeLauncher.cpp in Sources */,
+				BCB5653818B8FFBF0049AE3A /* OLSHAppDelegate.mm in Sources */,
+				BCB5650C18B8FEC00049AE3A /* main.m in Sources */,
+				BC4F150C18D0A14C00AD4D09 /* SimpleUri.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCB5651918B8FEC00049AE3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BCB5652218B8FEC00049AE3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BCB564FB18B8FEC00049AE3A /* Office Launcher Schema Handler */;
+			targetProxy = BCB5652118B8FEC00049AE3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BCB5650818B8FEC00049AE3A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCB5650918B8FEC00049AE3A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BCB5650E18B8FEC00049AE3A /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCB5650F18B8FEC00049AE3A /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		BCB5651418B8FEC00049AE3A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCB5651518B8FEC00049AE3A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BCB5652B18B8FEC00049AE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BCB5652C18B8FEC00049AE3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BCB5652E18B8FEC00049AE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Office Launcher Schema Handler/Office Launcher Schema Handler-Prefix.pch";
+				INFOPLIST_FILE = "Office Launcher Schema Handler/Office Launcher Schema Handler-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BCB5652F18B8FEC00049AE3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Office Launcher Schema Handler/Office Launcher Schema Handler-Prefix.pch";
+				INFOPLIST_FILE = "Office Launcher Schema Handler/Office Launcher Schema Handler-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		BCB5653118B8FEC00049AE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Office Launcher Schema Handler.app/Contents/MacOS/Office Launcher Schema Handler";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Office Launcher Schema Handler/Office Launcher Schema Handler-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Office Launcher Schema HandlerTests/Office Launcher Schema HandlerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		BCB5653218B8FEC00049AE3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Office Launcher Schema Handler.app/Contents/MacOS/Office Launcher Schema Handler";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Office Launcher Schema Handler/Office Launcher Schema Handler-Prefix.pch";
+				INFOPLIST_FILE = "Office Launcher Schema HandlerTests/Office Launcher Schema HandlerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BCB564F718B8FEC00049AE3A /* Build configuration list for PBXProject "Office Launcher Schema Handler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCB5652B18B8FEC00049AE3A /* Debug */,
+				BCB5652C18B8FEC00049AE3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCB5652D18B8FEC00049AE3A /* Build configuration list for PBXNativeTarget "Office Launcher Schema Handler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCB5652E18B8FEC00049AE3A /* Debug */,
+				BCB5652F18B8FEC00049AE3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCB5653018B8FEC00049AE3A /* Build configuration list for PBXNativeTarget "Office Launcher Schema HandlerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCB5653118B8FEC00049AE3A /* Debug */,
+				BCB5653218B8FEC00049AE3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BCB564F418B8FEC00049AE3A /* Project object */;
+}
