@@ -57,4 +57,4 @@ target_link_libraries(${PROJECT_NAME}
 # include(Mac/codesigning.cmake)
 
 #To create a DMG, include the following file
-include(Mac/installer.cmake)
+# include(Mac/installer.cmake)
