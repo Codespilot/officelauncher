@@ -30,7 +30,7 @@ std::wstring utf8_to_wstring(const std::string& src)
 #ifdef _WIN32
     utf8::utf8to16(src.begin(), src.end(), std::back_inserter(dest));
 #else
-    utf8::utf8to32(src.begin(), src.end(), std::back_inserter(out_str));
+    utf8::utf8to32(src.begin(), src.end(), std::back_inserter(dest));
 #endif
     return dest;
 }
