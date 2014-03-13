@@ -30,6 +30,14 @@
                 <string>officelauncher-edit</string>
             </array>
         </dict>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>Office launcher for Document editing</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>officelauncher-view</string>
+            </array>
+        </dict>
     </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
