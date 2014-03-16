@@ -31,6 +31,8 @@ std::string wstring_to_utf8(const std::wstring& src);
 
 std::wstring urlDecode(const std::wstring &src);
 
+std::wstring urlDecodeComponent(const std::wstring &src);
+
 };
 
 #endif // H_OfficeLauncherCommons

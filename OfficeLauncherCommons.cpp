@@ -75,4 +75,45 @@ std::wstring urlDecode(const std::wstring &src)
     return result;
 }
 
+bool isComponentChar(int c)
+{
+    return (c == 0x2C) // ,
+        || (c == 0x2F) // /
+        || (c == 0x3F) // ?
+        || (c == 0x3A) // :
+        || (c == 0x40) // @
+        || (c == 0x26) // &
+        || (c == 0x3D) // =
+        || (c == 0x2B) // +
+        || (c == 0x24) // $
+        || (c == 0x23); // #
+}
+
+std::wstring urlDecodeComponent(const std::wstring &src)
+{
+    std::wstring result;
+    for (std::size_t i = 0; i < src.size(); ++i)
+    {
+        if ( (src[i] == '%') && (i + 3 <= src.size()) )
+        {
+            int value = 0;
+            std::wistringstream is(src.substr(i + 1, 2));
+            if ( (is >> std::hex >> value) && isComponentChar(value) )
+            {
+                result += static_cast<wchar_t>(value);
+                i += 2;
+            }
+            else
+            {
+                result += src[i];
+            }
+        }
+        else
+        {
+            result += src[i];
+        }
+    }
+    return result;
+}
+
 };
