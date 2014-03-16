@@ -20,7 +20,7 @@
 #include "stdafx.h"
 #include <string>
 #include <iostream>
-#include "SimpleUri.h"
+#include "../../SimpleUri.h"
 #include <Windows.h>
 #include <vector>
 #include <sstream>
@@ -103,7 +103,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     {
         return 1;
     }
-    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
+    int result = platformOfficeLauncher.openDocument(urlDecodeComponent(encodedUrl), readOnly);
     if(OLP_ERROR_SUCCESS != result)
     {
         errorMessage(L"Failed starting Microsoft Office.");

@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleUri.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -36,6 +30,9 @@
     <ClInclude Include="..\..\OfficeLauncherCommons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\SimpleUri.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -44,13 +41,13 @@
     <ClCompile Include="OfficeLauncherSchemaHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleUri.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\PlatformDependentOfficeLauncher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\OfficeLauncherCommons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\SimpleUri.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

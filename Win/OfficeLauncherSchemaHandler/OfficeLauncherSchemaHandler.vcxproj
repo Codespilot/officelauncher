@@ -82,21 +82,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\OfficeLauncherCommons.h" />
+    <ClInclude Include="..\..\SimpleUri.h" />
     <ClInclude Include="..\PlatformDependentOfficeLauncher.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SimpleUri.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\OfficeLauncherCommons.cpp" />
+    <ClCompile Include="..\..\SimpleUri.cpp" />
     <ClCompile Include="..\PlatformDependentOfficeLauncher.cpp" />
     <ClCompile Include="OfficeLauncherSchemaHandler.cpp" />
-    <ClCompile Include="SimpleUri.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
