@@ -30,7 +30,7 @@ class PlatformDependentOfficeLauncher
 public:
     PlatformDependentOfficeLauncher();
     bool suppressOpenWarning(const SimpleUri& url_utf8);
-    int openDocument(const std::wstring& url, bool readOnly);
+    int openDocument(const std::wstring& encodedUrl, bool readOnly);
 
 private:
     std::map<std::string, std::string> m_extensionToBundleMap;
