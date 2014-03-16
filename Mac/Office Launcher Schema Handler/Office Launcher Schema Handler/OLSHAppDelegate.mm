@@ -115,7 +115,7 @@ void handleSchemaUrl(const std::wstring& schemaHandlerUri)
     {
         return;
     }
-    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
+    int result = platformOfficeLauncher.openDocument(urlDecodeComponent(encodedUrl), readOnly);
     if(OLP_ERROR_SUCCESS != result)
     {
         errorMessage(L"Failed starting Microsoft Office.");
