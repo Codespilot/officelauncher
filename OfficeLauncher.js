@@ -85,7 +85,7 @@ function OfficeLauncher()
                 var result;
                 if(readOnly)
                 {
-                    if(!control.ViewDocument)
+                    if(!(m_isIE || control.ViewDocument))
                     {
                         m_controlNotActivated = true;
                     }
@@ -96,7 +96,7 @@ function OfficeLauncher()
                 }
                 else
                 {
-                    if(!control.EditDocument)
+                    if(!(m_isIE || control.EditDocument))
                     {
                         m_controlNotActivated = true;
                     }
