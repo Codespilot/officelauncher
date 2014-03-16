@@ -138,7 +138,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>../../../../fbbuild/projects/Office Launcher Schema Handler/Build/Products/Release/Office Launcher Schema Handler.app</string>
+											<string>artifacts/Office Launcher Schema Handler.app</string>
 											<key>PATH_TYPE</key>
 											<integer>1</integer>
 											<key>PERMISSIONS</key>
@@ -154,7 +154,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>../../../../fbbuild/projects/OfficeLauncherPlugIn/Release/OfficeLauncherPlugIn.plugin</string>
+											<string>artifacts/OfficeLauncherPlugIn.plugin</string>
 											<key>PATH_TYPE</key>
 											<integer>1</integer>
 											<key>PERMISSIONS</key>
