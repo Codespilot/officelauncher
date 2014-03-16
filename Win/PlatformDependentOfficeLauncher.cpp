@@ -51,11 +51,11 @@ bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decod
     return readResult && (value == 1);
 }
 
-long PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool readOnly)
+long PlatformDependentOfficeLauncher::openDocument(const std::wstring& encodedUrl, bool readOnly)
 {
 
     // get file  extension
-    SimpleUri decodedUri(urlDecode(url));
+    SimpleUri decodedUri(urlDecode(encodedUrl));
     if(!decodedUri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
@@ -122,21 +122,21 @@ long PlatformDependentOfficeLauncher::openDocument(const std::wstring& url, bool
     std::wstring formattedDdeexecIfExec;
     if(hasCommand)
     {
-        if(!formatMessage(command,url,L"",formattedCommand))
+        if(!formatMessage(command,encodedUrl,L"",formattedCommand))
         {
             return OLP_ERROR_WIN_FORMAT_STR_FAILED;
         }
     }
     if(hasDdeexec)
     {
-        if(!formatMessage(ddeexec,url,L"",formattedDdeexec))
+        if(!formatMessage(ddeexec,encodedUrl,L"",formattedDdeexec))
         {
             return OLP_ERROR_WIN_FORMAT_STR_FAILED;
         }
     }
     if(hasDdeexecIfExec)
     {
-        if(!formatMessage(ddeexecIfExec,url,L"",formattedDdeexecIfExec))
+        if(!formatMessage(ddeexecIfExec,encodedUrl,L"",formattedDdeexecIfExec))
         {
             return OLP_ERROR_WIN_FORMAT_STR_FAILED;
         }
