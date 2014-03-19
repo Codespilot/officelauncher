@@ -60,7 +60,6 @@ void errorMessage(const std::wstring& message)
 {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
-    [alert addButtonWithTitle:@"Cancel"];
     [alert setMessageText:@"Error"];
     [alert setInformativeText:toNSString(message)];
     [alert setAlertStyle:NSCriticalAlertStyle];
