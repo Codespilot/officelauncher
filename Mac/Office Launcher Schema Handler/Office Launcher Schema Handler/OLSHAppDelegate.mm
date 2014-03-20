@@ -39,12 +39,12 @@ NSString* toNSString(const std::wstring& in)
     return [[NSString alloc] initWithBytes:data length:size encoding:encodingWcharT];
 }
 
-bool confirmOpen(SimpleUri& decodedUri)
+bool confirmOpen(SimpleUri& uri)
 {
     std::wstring msg = L"File name: ";
-    msg.append(urlDecodeComplete(decodedUri.getFilename()));
+    msg.append(urlDecodeComplete(uri.getFilename()));
     msg.append(L"\nFrom: ");
-    msg.append(urlDecodeComplete(decodedUri.getServer()));
+    msg.append(urlDecodeComplete(uri.getServer()));
     msg.append(L"\n\nSome files can harm your computer.");
     msg.append(L" If you do not fully trust the source, do not open the file.");
     NSAlert *alert = [[NSAlert alloc] init];

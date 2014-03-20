@@ -52,16 +52,16 @@ long OfficeLauncherPlugInAPI::viewDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    SimpleUri decodedUri(urlDecode(utf8_to_wstring(url_utf8)));
-    if(!decodedUri.isValid())
+    SimpleUri uri(utf8_to_wstring(url_utf8));
+    if(!uri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
+    if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
     {
         return OLP_ERROR_USER_REJECTED;
     }
@@ -81,16 +81,16 @@ long OfficeLauncherPlugInAPI::editDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    SimpleUri decodedUri(urlDecode(utf8_to_wstring(url_utf8)));
-    if(!decodedUri.isValid())
+    SimpleUri uri(utf8_to_wstring(url_utf8));
+    if(!uri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
+    if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
     {
         return OLP_ERROR_USER_REJECTED;
     }
@@ -108,13 +108,13 @@ bool confirmOpenActiveX(const std::string& url_utf8)
 /// @brief  Asks the user for  permission to open the given URL.
 ///         Invokes the JavaScript confirm method for user interaction.
 ///////////////////////////////////////////////////////////////////////////////
-bool OfficeLauncherPlugInAPI::confirmOpen(SimpleUri& decodedUri)
+bool OfficeLauncherPlugInAPI::confirmOpen(SimpleUri& uri)
 {
     std::wstring msg = L"Do you want to open this file?\n\n";
     msg.append(L"File name: ");
-    msg.append(decodedUri.getFilename());
+    msg.append(urlDecodeComplete(uri.getFilename()));
     msg.append(L"\nFrom: ");
-    msg.append(decodedUri.getServer());
+    msg.append(urlDecodeComplete(uri.getServer()));
     msg.append(L"\n\nSome files can harm your computer. If you do not fully trust the source, do not open the file.");
     const std::string msg_utf8 = FB::wstring_to_utf8(msg);
     FB::DOM::WindowPtr domWindow = m_host->getDOMWindow();
