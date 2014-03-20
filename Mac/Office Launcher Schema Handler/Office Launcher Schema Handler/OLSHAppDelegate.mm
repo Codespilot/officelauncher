@@ -42,9 +42,9 @@ NSString* toNSString(const std::wstring& in)
 bool confirmOpen(SimpleUri& decodedUri)
 {
     std::wstring msg = L"File name: ";
-    msg.append(decodedUri.getFilename());
+    msg.append(urlDecodeComplete(decodedUri.getFilename()));
     msg.append(L"\nFrom: ");
-    msg.append(decodedUri.getServer());
+    msg.append(urlDecodeComplete(decodedUri.getServer()));
     msg.append(L"\n\nSome files can harm your computer.");
     msg.append(L" If you do not fully trust the source, do not open the file.");
     NSAlert *alert = [[NSAlert alloc] init];
@@ -99,22 +99,22 @@ void handleSchemaUrl(const std::wstring& schemaHandlerUri)
         errorMessage(L"URL too long.");
         return;
     }
-    SimpleUri decodedUri(urlDecode(encodedUrl));
-    if(!decodedUri.isValid())
+    SimpleUri uri(encodedUrl);
+    if(!uri.isValid())
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return;
     }
-    if(!( platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
+    if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
     {
         return;
     }
-    int result = platformOfficeLauncher.openDocument(urlDecodeComponent(encodedUrl), readOnly);
+    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
     if(OLP_ERROR_SUCCESS != result)
     {
         errorMessage(L"Failed starting Microsoft Office.");

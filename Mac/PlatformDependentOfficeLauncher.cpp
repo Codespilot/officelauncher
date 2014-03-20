@@ -62,18 +62,18 @@ bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decod
 int PlatformDependentOfficeLauncher::openDocument(const std::wstring& encodedUrl, bool readOnly)
 {
     // get file extension
-    SimpleUri decodedUri(urlDecode(encodedUrl));
-    if(!decodedUri.isValid())
+    SimpleUri uri(encodedUrl);
+    if(!uri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         return OLP_ERROR_INVALID_URL;
     }
 
     // get bundleId of associated application
-    const std::string url_extension = wstring_to_utf8(decodedUri.getFileExtension());
+    const std::string url_extension = urlDecodeToUtf8(uri.getFileExtension());
     std::map<std::string, std::string>::iterator itBundleIds = m_extensionToBundleMap.find(url_extension);
     if(itBundleIds == m_extensionToBundleMap.end())
     {

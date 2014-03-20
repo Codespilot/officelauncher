@@ -48,9 +48,9 @@ std::string wstring_to_utf8(const std::wstring& src)
 
 // urlDecode: modified version from boost_asio/example/http/server3/request_handler.cpp
 // original code distributed under the Boost Software License, Version 1.0.
-std::wstring urlDecode(const std::wstring &src)
+std::string urlDecodeToUtf8(const std::wstring &src)
 {
-    std::wstring result;
+    std::string result;
     for (std::size_t i = 0; i < src.size(); ++i)
     {
         if ( (src[i] == '%') && (i + 3 <= src.size()) )
@@ -59,7 +59,7 @@ std::wstring urlDecode(const std::wstring &src)
             std::wistringstream is(src.substr(i + 1, 2));
             if (is >> std::hex >> value)
             {
-                result += static_cast<wchar_t>(value);
+                result += static_cast<char>(value);
                 i += 2;
             }
             else
@@ -73,6 +73,11 @@ std::wstring urlDecode(const std::wstring &src)
         }
     }
     return result;
+}
+
+std::wstring urlDecodeComplete(const std::wstring &src)
+{
+    return utf8_to_wstring(urlDecodeToUtf8(src));
 }
 
 bool isComponentChar(int c)
@@ -89,6 +94,7 @@ bool isComponentChar(int c)
         || (c == 0x23); // #
 }
 
+/*
 std::wstring urlDecodeComponent(const std::wstring &src)
 {
     std::wstring result;
@@ -115,5 +121,6 @@ std::wstring urlDecodeComponent(const std::wstring &src)
     }
     return result;
 }
+*/
 
 };

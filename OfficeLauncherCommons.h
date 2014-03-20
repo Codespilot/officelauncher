@@ -29,9 +29,11 @@ std::wstring utf8_to_wstring(const std::string& src);
 
 std::string wstring_to_utf8(const std::wstring& src);
 
-std::wstring urlDecode(const std::wstring &src);
+std::string urlDecodeToUtf8(const std::wstring &src);
 
-std::wstring urlDecodeComponent(const std::wstring &src);
+std::wstring urlDecodeComplete(const std::wstring &src);
+
+//std::wstring urlDecodeComponent(const std::wstring &src);
 
 };
 
