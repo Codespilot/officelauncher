@@ -389,22 +389,19 @@ function OfficeLauncher()
         return navigator && navigator.mimeTypes && navigator.mimeTypes[mimeType] && navigator.mimeTypes[mimeType].enabledPlugin;
     }
     
-    var ESCAPE_CHARS = "<>\'\"?#@%&";
+    var ESCAPE_CHARS = '<>\'\"?#@%&`';
     
     function encodeUrl(url)
     {
-        var encoded = "";
-        var i = 0;
+        var encoded = '';
         var x = 0;
-        for(i = 0; i < url.length; i++)
+        for(var i = 0; i < url.length; i++)
         {
             var charCode = url.charCodeAt(i);
+            var c = url.charAt(i);
             if(charCode < 0x80)
             {
-                if(  ( (charCode >= 'A') && (charCode <= 'Z') ) ||
-                     ( (charCode >= 'a') && (charCode <= 'z') ) ||
-                     ( (charCode >= '0') && (charCode <= '9') ) ||
-                     ( (charCode >= 33) && (charCode <= 122) && (ESCAPE_CHARS.indexOf(charCode) <  0) ) )
+                if ( (charCode >= 33) && (charCode <= 122) && (ESCAPE_CHARS.indexOf(c) < 0) )
                 {
                     encoded += url.charAt(i);
                 }
