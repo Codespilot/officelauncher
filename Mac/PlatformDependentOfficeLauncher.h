@@ -29,7 +29,7 @@ class PlatformDependentOfficeLauncher
 
 public:
     PlatformDependentOfficeLauncher();
-    bool suppressOpenWarning(const SimpleUri& url_utf8);
+    bool suppressOpenWarning(const SimpleUri& uri);
     int openDocument(const std::wstring& encodedUrl, bool readOnly);
 
 private:

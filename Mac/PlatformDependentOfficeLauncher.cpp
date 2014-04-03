@@ -52,7 +52,7 @@ PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
     m_extensionToBundleMap[".ppsm"] = "com.microsoft.Powerpoint";
 }
 
-bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decodedUri)
+bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& uri)
 {
     Boolean resultValid;
     Boolean result = CFPreferencesGetAppBooleanValue(CFSTR("SuppressOpenWarning"), CFSTR("com.OfficeLauncherPlugIn"), &resultValid);

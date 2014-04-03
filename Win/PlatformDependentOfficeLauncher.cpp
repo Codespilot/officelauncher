@@ -44,7 +44,7 @@ PlatformDependentOfficeLauncher::PlatformDependentOfficeLauncher()
     m_validProgIds.push_back(L"Access.Application");
 }
 
-bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& decodedUri)
+bool PlatformDependentOfficeLauncher::suppressOpenWarning(const SimpleUri& uri)
 {
     DWORD value = 0;
     bool readResult = readRegValueDWORD(HKEY_CURRENT_USER, L"Software\\Office Launcher Plug-In", L"SuppressOpenWarning", value);
