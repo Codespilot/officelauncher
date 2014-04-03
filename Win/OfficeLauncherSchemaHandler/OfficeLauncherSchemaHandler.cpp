@@ -27,6 +27,7 @@
 #include "../PlatformDependentOfficeLauncher.h"
 #include "../../OfficeLauncherPlugInErrorCodes.h"
 #include "../../OfficeLauncherCommons.h"
+#include "utf8.h"
 
 using namespace OfficeLauncherCommons;
 
@@ -105,12 +106,35 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+    try
     {
+        if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+        {
+            return 1;
+        }
+        int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
+        if(OLP_ERROR_SUCCESS != result)
+        {
+            errorMessage(L"Failed starting Microsoft Office.");
+            return 1;
+        }
+    }
+    catch(const utf8::not_enough_room &e)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
-    if(OLP_ERROR_SUCCESS != result)
+    catch(const utf8::invalid_utf8 &e)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
+        return 1;
+    }
+    catch(const utf8::invalid_code_point &e)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
+        return 1;
+    }
+    catch(const std::exception &e)
     {
         errorMessage(L"Failed starting Microsoft Office.");
         return 1;

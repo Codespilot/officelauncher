@@ -52,20 +52,39 @@ long OfficeLauncherPlugInAPI::viewDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    SimpleUri uri(utf8_to_wstring(url_utf8));
-    if(!uri.isValid())
+    try
+    {
+        SimpleUri uri(utf8_to_wstring(url_utf8));
+        if(!uri.isValid())
+        {
+            return OLP_ERROR_INVALID_URL;
+        }
+        if(!uri.isHttpOrHttpsSchema())
+        {
+            return OLP_ERROR_INVALID_URL;
+        }
+        if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+        {
+            return OLP_ERROR_USER_REJECTED;
+        }
+        return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), true);
+    }
+    catch(const utf8::not_enough_room &e)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!uri.isHttpOrHttpsSchema())
+    catch(const utf8::invalid_utf8 &e)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+    catch(const utf8::invalid_code_point &e)
     {
-        return OLP_ERROR_USER_REJECTED;
+        return OLP_ERROR_INVALID_URL;
     }
-    return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), true);
+    catch(const std::exception &e)
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -81,20 +100,39 @@ long OfficeLauncherPlugInAPI::editDocument(const std::string& url_utf8)
     {
         return OLP_ERROR_URL_TOO_LONG;
     }
-    SimpleUri uri(utf8_to_wstring(url_utf8));
-    if(!uri.isValid())
+    try
+    {
+        SimpleUri uri(utf8_to_wstring(url_utf8));
+        if(!uri.isValid())
+        {
+            return OLP_ERROR_INVALID_URL;
+        }
+        if(!uri.isHttpOrHttpsSchema())
+        {
+            return OLP_ERROR_INVALID_URL;
+        }
+        if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+        {
+            return OLP_ERROR_USER_REJECTED;
+        }
+        return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), false);
+    }
+    catch(const utf8::not_enough_room &e)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!uri.isHttpOrHttpsSchema())
+    catch(const utf8::invalid_utf8 &e)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!( m_platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+    catch(const utf8::invalid_code_point &e)
     {
-        return OLP_ERROR_USER_REJECTED;
+        return OLP_ERROR_INVALID_URL;
     }
-    return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), false);
+    catch(const std::exception &e)
+    {
+        return OLP_ERROR_INVALID_URL;
+    }
 }
 
 bool confirmOpenActiveX(const std::string& url_utf8)
