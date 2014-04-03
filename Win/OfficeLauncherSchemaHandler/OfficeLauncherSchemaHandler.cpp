@@ -32,6 +32,8 @@ using namespace OfficeLauncherCommons;
 
 #define MAX_URL_LENGTH 1024
 
+// #define PAUSE_FOR_DEBUGGER
+
 bool confirmOpen(SimpleUri& decodedUri)
 {
     std::wstring msg = L"Do you want to open this file?\n\n";
@@ -56,6 +58,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
+
+#ifdef PAUSE_FOR_DEBUGGER
+    errorMessage(L"Attach debugger now.");
+#endif
 
     PlatformDependentOfficeLauncher platformOfficeLauncher;
 
