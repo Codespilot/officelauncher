@@ -96,12 +96,12 @@
                                     <RegistryValue Type="string" Value="URL: Office Launcher Protocol for Editing" KeyPath="yes" />
                                     <RegistryValue Type="string" Name="URL Protocol" Value=""/>
                                 </RegistryKey>
-                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-edit\shell\open\command" Value="[#SchemaHandlerExe] &quot;%1&quot;" Type="string" Action="write"/>
+                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-edit\shell\open\command" Value="[#SchemaHandlerExe] %1" Type="string" Action="write"/>
                                 <RegistryKey Root="HKCU" Key="Software\Classes\officelauncher-view" Action="createAndRemoveOnUninstall">
                                     <RegistryValue Type="string" Value="URL: Office Launcher Protocol for Reading"/>
                                     <RegistryValue Type="string" Name="URL Protocol" Value=""/>
                                 </RegistryKey>
-                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-read\shell\open\command" Value="[#SchemaHandlerExe] &quot;%1&quot;" Type="string" Action="write"/>
+                                <RegistryValue Root="HKCU" Key="Software\Classes\officelauncher-view\shell\open\command" Value="[#SchemaHandlerExe] %1" Type="string" Action="write"/>
                             </Component>
                         </Directory>
                     </Directory>
