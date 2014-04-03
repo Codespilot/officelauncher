@@ -34,13 +34,13 @@ using namespace OfficeLauncherCommons;
 
 // #define PAUSE_FOR_DEBUGGER
 
-bool confirmOpen(SimpleUri& decodedUri)
+bool confirmOpen(SimpleUri& uri)
 {
     std::wstring msg = L"Do you want to open this file?\n\n";
     msg.append(L"File name: ");
-    msg.append(decodedUri.getFilename());
+    msg.append(urlDecodeComplete(uri.getFilename()));
     msg.append(L"\nFrom: ");
-    msg.append(decodedUri.getServer());
+    msg.append(urlDecodeComplete(uri.getServer()));
     msg.append(L"\n\nSome files can harm your computer. If you do not fully trust the source, do not open the file.");
     int result = MessageBox(NULL, msg.c_str(), L"Confirm", MB_OKCANCEL | MB_ICONINFORMATION);
     return (result == IDOK);
@@ -94,22 +94,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         errorMessage(L"URL too long.");
         return 1;
     }
-    SimpleUri decodedUri(urlDecode(encodedUrl));
-    if(!decodedUri.isValid())
+    SimpleUri uri(encodedUrl);
+    if(!uri.isValid())
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    if(!( platformOfficeLauncher.suppressOpenWarning(decodedUri) || confirmOpen(decodedUri)))
+    if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
     {
         return 1;
     }
-    int result = platformOfficeLauncher.openDocument(urlDecodeComponent(encodedUrl), readOnly);
+    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
     if(OLP_ERROR_SUCCESS != result)
     {
         errorMessage(L"Failed starting Microsoft Office.");

@@ -55,19 +55,19 @@ long PlatformDependentOfficeLauncher::openDocument(const std::wstring& encodedUr
 {
 
     // get file  extension
-    SimpleUri decodedUri(urlDecode(encodedUrl));
-    if(!decodedUri.isValid())
+    SimpleUri uri(encodedUrl);
+    if(!uri.isValid())
     {
         return OLP_ERROR_INVALID_URL;
     }
-    if(!decodedUri.isHttpOrHttpsSchema())
+    if(!uri.isHttpOrHttpsSchema())
     {
         return OLP_ERROR_INVALID_URL;
     }
 
     // get ProgId for file extension from registry
     std::wstring progId;
-    if(!readRegValueSZ(HKEY_CLASSES_ROOT,decodedUri.getFileExtension(),L"",progId))
+    if(!readRegValueSZ(HKEY_CLASSES_ROOT,urlDecodeComplete(uri.getFileExtension()),L"",progId))
     {
         return OLP_ERROR_WIN_NOT_REGISTERED;
     }
