@@ -69,19 +69,19 @@ long OfficeLauncherPlugInAPI::viewDocument(const std::string& url_utf8)
         }
         return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), true);
     }
-    catch(const utf8::not_enough_room &e)
+    catch(const utf8::not_enough_room)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const utf8::invalid_utf8 &e)
+    catch(const utf8::invalid_utf8)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const utf8::invalid_code_point &e)
+    catch(const utf8::invalid_code_point)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const std::exception &e)
+    catch(const std::exception)
     {
         return OLP_ERROR_INVALID_URL;
     }
@@ -117,19 +117,19 @@ long OfficeLauncherPlugInAPI::editDocument(const std::string& url_utf8)
         }
         return m_platformOfficeLauncher.openDocument(utf8_to_wstring(url_utf8), false);
     }
-    catch(const utf8::not_enough_room &e)
+    catch(const utf8::not_enough_room)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const utf8::invalid_utf8 &e)
+    catch(const utf8::invalid_utf8)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const utf8::invalid_code_point &e)
+    catch(const utf8::invalid_code_point)
     {
         return OLP_ERROR_INVALID_URL;
     }
-    catch(const std::exception &e)
+    catch(const std::exception)
     {
         return OLP_ERROR_INVALID_URL;
     }
