@@ -50,13 +50,17 @@ std::string wstring_to_utf8(const std::wstring& src)
 // original code distributed under the Boost Software License, Version 1.0.
 std::string urlDecodeToUtf8(const std::wstring &src)
 {
+    // the src is a wstring and can already contain Unicode chars. So we need to convert
+    // them back to UTF8.
+    std::string inp = wstring_to_utf8(src);
+    // now we can decode the percent encoding in inp
     std::string result;
-    for (std::size_t i = 0; i < src.size(); ++i)
+    for (std::size_t i = 0; i < inp.size(); ++i)
     {
-        if ( (src[i] == '%') && (i + 3 <= src.size()) )
+        if ( (inp[i] == '%') && (i + 3 <= inp.size()) )
         {
             int value = 0;
-            std::wistringstream is(src.substr(i + 1, 2));
+            std::istringstream is(inp.substr(i + 1, 2));
             if (is >> std::hex >> value)
             {
                 result += static_cast<char>(value);
@@ -64,12 +68,12 @@ std::string urlDecodeToUtf8(const std::wstring &src)
             }
             else
             {
-                result += src[i];
+                result += inp[i];
             }
         }
         else
         {
-            result += src[i];
+            result += inp[i];
         }
     }
     return result;
