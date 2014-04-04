@@ -79,6 +79,33 @@ std::string urlDecodeToUtf8(const std::wstring &src)
     return result;
 }
 
+std::wstring decodeDollarEncoding(const std::string &src)
+{
+    std::string utf8_result;
+    for (std::size_t i = 0; i < src.size(); ++i)
+    {
+        if ( (src[i] == '$') && (i + 3 <= src.size()) )
+        {
+            int value = 0;
+            std::istringstream is(src.substr(i + 1, 2));
+            if (is >> std::hex >> value)
+            {
+                utf8_result += static_cast<char>(value);
+                i += 2;
+            }
+            else
+            {
+                utf8_result += src[i];
+            }
+        }
+        else
+        {
+            utf8_result += src[i];
+        }
+    }
+    return utf8_to_wstring(utf8_result);
+}
+
 std::wstring urlDecodeComplete(const std::wstring &src)
 {
     return utf8_to_wstring(urlDecodeToUtf8(src));
