@@ -90,6 +90,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         return 1;
     }
 
+    encodedUrl = decodeDollarEncoding(wstring_to_utf8(encodedUrl));
+
     if(encodedUrl.size() > MAX_URL_LENGTH)
     {
         errorMessage(L"URL too long.");
