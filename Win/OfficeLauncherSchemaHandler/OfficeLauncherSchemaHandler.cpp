@@ -119,22 +119,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
             return 1;
         }
     }
-    catch(const utf8::not_enough_room &e)
+    catch(const utf8::not_enough_room)
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    catch(const utf8::invalid_utf8 &e)
+    catch(const utf8::invalid_utf8)
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    catch(const utf8::invalid_code_point &e)
+    catch(const utf8::invalid_code_point)
     {
         errorMessage(L"Invalid Office-Launcher URL.");
         return 1;
     }
-    catch(const std::exception &e)
+    catch(const std::exception)
     {
         errorMessage(L"Failed starting Microsoft Office.");
         return 1;
