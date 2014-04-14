@@ -94,6 +94,8 @@ void handleSchemaUrl(const std::wstring& schemaHandlerUri)
         return;
     }
     
+    encodedUrl = decodeDollarEncoding(wstring_to_utf8(encodedUrl));
+    
     if(encodedUrl.size() > MAX_URL_LENGTH)
     {
         errorMessage(L"URL too long.");
@@ -110,12 +112,35 @@ void handleSchemaUrl(const std::wstring& schemaHandlerUri)
         errorMessage(L"Invalid Office-Launcher URL.");
         return;
     }
-    if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+    try
     {
+        if(!( platformOfficeLauncher.suppressOpenWarning(uri) || confirmOpen(uri)))
+        {
+            return;
+        }
+        int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
+        if(OLP_ERROR_SUCCESS != result)
+        {
+            errorMessage(L"Failed starting Microsoft Office.");
+            return;
+        }
+    }
+    catch(const utf8::not_enough_room)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
         return;
     }
-    int result = platformOfficeLauncher.openDocument(encodedUrl, readOnly);
-    if(OLP_ERROR_SUCCESS != result)
+    catch(const utf8::invalid_utf8)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
+        return;
+    }
+    catch(const utf8::invalid_code_point)
+    {
+        errorMessage(L"Invalid Office-Launcher URL.");
+        return;
+    }
+    catch(const std::exception)
     {
         errorMessage(L"Failed starting Microsoft Office.");
         return;
