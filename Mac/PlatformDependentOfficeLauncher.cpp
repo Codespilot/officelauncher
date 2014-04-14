@@ -147,6 +147,24 @@ int PlatformDependentOfficeLauncher::openDocument(const std::wstring& encodedUrl
 
     // dispose event and return result
     AEDisposeDesc(&event);
+    
+    // send activate event to application to bring it to front
+    status = AEBuildAppleEvent('misc',
+                               'actv',
+                               typeApplicationBundleID,
+                               associatedBundleId.c_str(),
+                               associatedBundleId.length(),
+                               kAutoGenerateReturnID,
+                               kAnyTransactionID,
+                               &event,
+                               NULL,
+                               "");
+    if(status == 0)
+    {
+        AppleEvent eventReply;
+        AESendMessage(&event, &eventReply, kAENormalPriority, kAEDefaultTimeout);
+        AEDisposeDesc(&event);
+    }
 
     // return status;
     return OLP_ERROR_SUCCESS;
